@@ -8,7 +8,13 @@ const FormularioTarea = () => {
 
 const handleSubmit=(e)=>{
   e.preventDefault();
-  console.log("guardar tarea")
+  console.log("guardar tarea");
+  // tomar tarea de state y guardar en state tareas (array)
+  //... operado expred, copia los elementos de array tareas y al final le agrego la ultima tarea que agrego el usr 
+  setTareas([...tareas, tarea])
+
+  //limpiar formulario
+  setTarea("");
 }
 
   return (
