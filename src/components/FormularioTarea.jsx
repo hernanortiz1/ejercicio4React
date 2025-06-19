@@ -32,7 +32,7 @@ const handleSubmit=(e)=>{
           </Button>
         </Form.Group>
       </Form>
-      <ListaTareas />
+      <ListaTareas tareaProps={tareas}/>
     </section>
   );
 };
