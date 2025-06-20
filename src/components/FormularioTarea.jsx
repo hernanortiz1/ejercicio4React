@@ -6,16 +6,28 @@ const FormularioTarea = () => {
   const [tarea, setTarea] = useState("");
   const [tareas, setTareas] = useState([]);
 
-const handleSubmit=(e)=>{
-  e.preventDefault();
-  console.log("guardar tarea");
-  // tomar tarea de state y guardar en state tareas (array)
-  //... operado expred, copia los elementos de array tareas y al final le agrego la ultima tarea que agrego el usr 
-  setTareas([...tareas, tarea])
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("guardar tarea");
+    // tomar tarea de state y guardar en state tareas (array)
+    //... operado expred, copia los elementos de array tareas y al final le agrego la ultima tarea que agrego el usr
+    setTareas([...tareas, tarea]);
 
-  //limpiar formulario
-  setTarea("");
-}
+    //limpiar formulario
+    setTarea("");
+  };
+
+  const borrarTarea = (nombreTarea) => {
+    const indice = tareas.findIndex((item) => item === nombreTarea);
+    //actualizar estado tareas
+    if (indice !== -1) {
+      //copio el array original 
+      const nuevasTareas = [...tareas];
+     //elimino con splice y actualizo
+      nuevasTareas.splice(indice, 1);
+      setTareas(nuevasTareas);
+    }
+  };
 
   return (
     <section>
@@ -32,7 +44,7 @@ const handleSubmit=(e)=>{
           </Button>
         </Form.Group>
       </Form>
-      <ListaTareas tareaProps={tareas}/>
+      <ListaTareas tareaProps={tareas} borrarTareaProps={borrarTarea} />
     </section>
   );
 };
