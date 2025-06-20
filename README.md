@@ -35,6 +35,7 @@ Esta es una pequeña aplicación desarrollada con **React**, **React-Bootstrap**
    Abre tu navegador en: [http://localhost:5173](http://localhost:5173)  
 
 ---
+## **📋 Funcionalidades Principales** 
 
 ### **1. Agregar Tareas** 📥  
 - Escribir tarea y luego hacer clic en enviar
