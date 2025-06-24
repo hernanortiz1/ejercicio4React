@@ -56,6 +56,14 @@ const FormularioTarea = () => {
             onChange={(e) => setTarea(e.target.value)}
             {...register("inputTarea", {
               required: "La tarea es un dato obligatorio",
+              minLength: {
+                value: 3,
+                message: "La tarea debe tener 3 caracteres como minimo ",
+              },
+              maxLength: {
+                value: 50,
+                message: "La tarea debe tener 50 caracteres como máximo",
+              },
             })}
           />
           <Button type="submit" variant="primary" className="ms-3">
