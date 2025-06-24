@@ -1,6 +1,7 @@
 import { Form, Button } from "react-bootstrap";
 import ListaTareas from "./ListaTareas";
 import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 
 const FormularioTarea = () => {
   const [tarea, setTarea] = useState("");
@@ -8,6 +9,14 @@ const FormularioTarea = () => {
   const tareasLocalStorage =
     JSON.parse(localStorage.getItem("listaTareas")) || [];
   const [tareas, setTareas] = useState(tareasLocalStorage);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
   useEffect(() => {
     //todas la lineas se ejecutan automaticamente en montaje y actualizacion
     console.log("desde use effect");
@@ -16,14 +25,13 @@ const FormularioTarea = () => {
     //para que no se ejecute en actualizacion }, [])
   }, [tareas]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const agregarTareas = (datos) => {
     // tomar tarea de state y guardar en state tareas (array)
     //... operado expred, copia los elementos de array tareas y al final le agrego la ultima tarea que agrego el usr
-    setTareas([...tareas, tarea]);
+    setTareas([...tareas, datos.inputTarea]);
 
     //limpiar formulario
-    setTarea("");
+    reset();
   };
 
   const borrarTarea = (nombreTarea) => {
@@ -40,18 +48,31 @@ const FormularioTarea = () => {
 
   return (
     <section>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3 d-flex">
+      <Form onSubmit={handleSubmit(agregarTareas)} className="mb-3">
+        <Form.Group className="mb-2 d-flex">
           <Form.Control
             type="text"
             placeholder="Ingresa una tarea"
             onChange={(e) => setTarea(e.target.value)}
-            value={tarea}
+            {...register("inputTarea", {
+              required: "La tarea es un dato obligatorio",
+              minLength: {
+                value: 3,
+                message: "La tarea debe tener 3 caracteres como minimo ",
+              },
+              maxLength: {
+                value: 50,
+                message: "La tarea debe tener 50 caracteres como máximo",
+              },
+            })}
           />
           <Button type="submit" variant="primary" className="ms-3">
             Enviar
           </Button>
         </Form.Group>
+        <Form.Text className="text-danger">
+          {errors.inputTarea?.message}
+        </Form.Text>
       </Form>
       <ListaTareas tareaProps={tareas} borrarTareaProps={borrarTarea} />
     </section>
